@@ -36,8 +36,11 @@
           "201": {
             "description": "Created"
           },
-          "500": {
-            "description": "Category already exists"
+          "400": {
+            "description": "User isn't admin!"
+          },
+          "401": {
+            "description": "Token missing!"
           }
         }
       },
@@ -93,6 +96,12 @@
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "400": {
+            "description": "User isn't admin!"
+          },
+          "401": {
+            "description": "Token missing!"
           }
         }
       }
@@ -127,8 +136,300 @@
           "201": {
             "description": "Created"
           },
-          "500": {
-            "description": "Specification already exists"
+          "400": {
+            "description": "User isn't admin!"
+          },
+          "401": {
+            "description": "Token missing!"
+          }
+        }
+      }
+    },
+    "/accounts": {
+      "post": {
+        "tags": ["Account"],
+        "summary": "Create a new Account",
+        "description": "Create a new user Account",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "driver_license": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Raphael da Silva",
+                  "email": "raphael@email.com",
+                  "password": "123456",
+                  "driver_license": "000000000"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Email already exists!"
+          }
+        }
+      }
+    },
+    "/sessions": {
+      "post": {
+        "tags": ["Account"],
+        "summary": "Authenticate an user",
+        "description": "Authenticate an user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "email": "user@email.com",
+                  "password": "123456"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Email or password incorrect!"
+          }
+        }
+      }
+    },
+    "/accounts/avatar": {
+      "patch": {
+        "tags": ["Account"],
+        "summary": "Upload user avatar",
+        "description": "Upload user avatar",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "User isn't admin!"
+          },
+          "401": {
+            "description": "Token missing!"
+          }
+        }
+      }
+    },
+    "/cars": {
+      "post": {
+        "tags": ["Cars"],
+        "summary": "Create a new Car",
+        "description": "Create a new Car",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "brand": {
+                    "type": "string"
+                  },
+                  "category_id": {
+                    "type": "string"
+                  },
+                  "daily_rate": {
+                    "type": "number"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "fine_amount": {
+                    "type": "number"
+                  },
+                  "license_plate": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "brand": "Brand Name",
+                  "category_id": "Category Id",
+                  "daily_rate": 100,
+                  "description": "Car Description",
+                  "fine_amount": 50,
+                  "license_plate": "License Plate Car",
+                  "name": "Car Name"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "User isn't admin!"
+          },
+          "401": {
+            "description": "Token missing!"
+          }
+        }
+      }
+    },
+    "/cars/specifications/:id": {
+      "post": {
+        "tags": ["Cars"],
+        "summary": "Create a Car speficication",
+        "description": "Create a Car Specification",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "specification_id": "array"
+                },
+                "example": {
+                  "specification_id": ["specification_id", "specification_id"]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "User isn't admin!"
+          },
+          "401": {
+            "description": "Token missing!"
+          }
+        }
+      }
+    },
+    "/cars/available": {
+      "get": {
+        "tags": ["Cars"],
+        "summary": "Get all available cars",
+        "description": "Get all available cars",
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/cars/images/:id": {
+      "patch": {
+        "tags": ["Cars"],
+        "summary": "Upload cars image",
+        "description": "Upload cars image",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "images": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "User isn't admin!"
+          },
+          "401": {
+            "description": "Token missing!"
+          }
+        }
+      }
+    },
+    "/rentals": {
+      "post": {
+        "tags": ["Rentals"],
+        "summary": "Create a new Rental",
+        "description": "Create a new Rental",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "expected_return_date": {
+                    "type": "string"
+                  },
+                  "car_id": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "expected_return_date": "ISO Date",
+                  "car_id": "Car Id"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "User isn't admin!"
+          },
+          "401": {
+            "description": "Token missing!"
           }
         }
       }
